@@ -1,0 +1,6 @@
+{
+  "name": "Go2Ways — Enterprise Asset Management & Cloud Modernization",
+  "description": "Enterprise asset management, IBM Maximo & MAS migration, TRIRIGA, and cloud modernization solutions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

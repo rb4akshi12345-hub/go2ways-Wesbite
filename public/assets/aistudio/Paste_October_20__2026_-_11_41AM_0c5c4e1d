@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Go2Ways — Enterprise Asset Management & Cloud Modernization</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --ms-blue: #0067B8;
+      --ms-blue-hover: #005DA6;
+      --ms-bg-warm: #FAF9F8;
+      --ms-surface: #FFFFFF;
+      --ms-gray-light: #F2F2F2;
+      --ms-text-dark: #1B1A19;
+      --ms-text-muted: #605E5C;
+      --fluent-silk: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body {
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      color: var(--ms-text-dark);
+      background-color: var(--ms-bg-warm);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Microsoft Mica / Acrylic Sticky Header */
+    .mica-nav {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
+    /* Universal Icon Hover -> Animate to Microsoft Blue */
+    .ms-icon-interactive {
+      color: var(--ms-text-muted);
+      transition: color 0.4s var(--fluent-silk),
+                  transform 0.4s var(--fluent-silk);
+    }
+
+    .ms-icon-interactive:hover,
+    .group:hover .ms-icon-interactive,
+    .fluent-card:hover .ms-icon-interactive,
+    .metric-item:hover .ms-icon-interactive,
+    .ms-link:hover .ms-icon-interactive {
+      color: var(--ms-blue) !important;
+    }
+
+    /* Subtle Fluent Card & Image Hover */
+    .fluent-card {
+      background: var(--ms-surface);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+      transition: transform 0.55s var(--fluent-silk),
+                  box-shadow 0.55s var(--fluent-silk),
+                  border-color 0.55s var(--fluent-silk);
+      overflow: hidden;
+    }
+
+    .fluent-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 103, 184, 0.28);
+    }
+
+    .fluent-card .card-img {
+      transition: transform 0.75s var(--fluent-silk);
+      will-change: transform;
+    }
+
+    .fluent-card:hover .card-img {
+      transform: scale(1.025);
+    }
+
+    /* Icon Badge Box — Starts Neutral, Animates to Blue on Hover */
+    .fluent-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      color: var(--ms-text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.45s var(--fluent-silk),
+                  border-color 0.45s var(--fluent-silk),
+                  transform 0.45s var(--fluent-silk),
+                  color 0.45s var(--fluent-silk),
+                  box-shadow 0.45s var(--fluent-silk);
+    }
+
+    .fluent-icon-box svg {
+      transition: transform 0.45s var(--fluent-silk),
+                  color 0.45s var(--fluent-silk);
+    }
+
+    .fluent-icon-box:hover,
+    .metric-item:hover .fluent-icon-box,
+    .fluent-card:hover .fluent-icon-box,
+    .group:hover .fluent-icon-box {
+      background: rgba(0, 103, 184, 0.12);
+      border-color: rgba(0, 103, 184, 0.4);
+      color: var(--ms-blue) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 103, 184, 0.14);
+    }
+
+    .fluent-icon-box:hover svg,
+    .metric-item:hover .fluent-icon-box svg,
+    .fluent-card:hover .fluent-icon-box svg,
+    .group:hover .fluent-icon-box svg {
+      color: var(--ms-blue) !important;
+      transform: scale(1.08);
+    }
+
+    /* Subtle Chevron Link Micro-Interaction */
+    .ms-link {
+      color: var(--ms-text-dark);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.4s var(--fluent-silk);
+    }
+
+    .ms-link .icon-chevron {
+      color: var(--ms-text-muted);
+      transform: translateX(0);
+      transition: transform 0.45s var(--fluent-silk),
+                  color 0.45s var(--fluent-silk);
+    }
+
+    .ms-link:hover,
+    .fluent-card:hover .ms-link {
+      color: var(--ms-blue);
+    }
+
+    .ms-link:hover .icon-chevron,
+    .fluent-card:hover .ms-link .icon-chevron {
+      color: var(--ms-blue);
+      transform: translateX(3.5px);
+    }
+
+    /* Primary Button */
+    .ms-btn-primary {
+      background: var(--ms-blue);
+      color: #FFFFFF;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.45s var(--fluent-silk),
+                  box-shadow 0.45s var(--fluent-silk);
+    }
+
+    .ms-btn-primary svg {
+      transition: transform 0.45s var(--fluent-silk);
+    }
+
+    .ms-btn-primary:hover {
+      background: var(--ms-blue-hover);
+      box-shadow: 0 4px 12px rgba(0, 103, 184, 0.22);
+    }
+
+    .ms-btn-primary:hover svg {
+      transform: translateX(2.5px);
+    }
+
+    /* Industry Overlay Corner Icon — Animates to Blue on Hover */
+    .industry-badge-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(6px);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.45s var(--fluent-silk),
+                  color 0.45s var(--fluent-silk),
+                  transform 0.45s var(--fluent-silk);
+    }
+
+    .fluent-card:hover .industry-badge-icon {
+      background: #FFFFFF;
+      color: var(--ms-blue);
+      transform: translateY(-2px);
+    }
+
+    /* ========================================================
+       FIXED CSS-GRID STACKED CAROUSEL (NO JUMPING OR OVERLAP)
+       ======================================================== */
+    .carousel-stack {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+      align-items: center;
+    }
+
+    .carousel-text-slide {
+      grid-area: 1 / 1;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(28px);
+      transition: opacity 0.65s var(--fluent-silk),
+                  transform 0.65s var(--fluent-silk),
+                  visibility 0.65s;
+      pointer-events: none;
+    }
+
+    .carousel-text-slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    .carousel-img-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(1.05) translateX(28px);
+      transition: opacity 0.75s var(--fluent-silk),
+                  transform 0.75s var(--fluent-silk),
+                  visibility 0.75s;
+      pointer-events: none;
+    }
+
+    .carousel-img-slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1) translateX(0);
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    /* 4-Second Progress Bar Animation */
+    @keyframes fillProgress {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+
+    .carousel-dot-fill {
+      width: 0%;
+      height: 100%;
+      background-color: var(--ms-blue);
+    }
+
+    .carousel-dot.active .carousel-dot-fill {
+      animation: fillProgress 4000ms linear forwards;
+    }
+
+    .carousel-paused .carousel-dot.active .carousel-dot-fill {
+      animation-play-state: paused;
+    }
+
+    .carousel-dot.completed .carousel-dot-fill {
+      width: 100%;
+      animation: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. MICROSOFT FLUENT UTILITY & GLOBAL NAVIGATION -->
+  <header class="mica-nav sticky top-0 z-50">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-14 h-14 flex items-center justify-between text-[13px]">
+      <div class="flex items-center gap-8">
+        <a href="#" class="group font-bold text-lg tracking-tight flex items-center gap-2.5 text-[#1B1A19]">
+          <span class="fluent-icon-box !w-7 !h-7">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 12h16m-7-7 7 7-7 7"/>
+            </svg>
+          </span>
+          Go2Ways
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-[#262626]">
+          <a href="#services" class="hover:text-[#0067B8] transition-colors duration-300">IBM Maximo & MAS</a>
+          <a href="#services" class="hover:text-[#0067B8] transition-colors duration-300">TRIRIGA</a>
+          <a href="#services" class="hover:text-[#0067B8] transition-colors duration-300">Cloud & Infrastructure</a>
+          <a href="#services" class="hover:text-[#0067B8] transition-colors duration-300">Enterprise Integration</a>
+          <a href="#industries" class="hover:text-[#0067B8] transition-colors duration-300">Industries</a>
+        </nav>
+      </div>
+      <div class="flex items-center gap-5">
+        <a href="mailto:support@go2ways.com" class="group hidden lg:inline-flex items-center gap-2 text-[#605E5C] hover:text-[#0067B8] transition-colors duration-300">
+          <svg class="ms-icon-interactive w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/>
+          </svg>
+          <span>support@go2ways.com</span>
+        </a>
+        <a href="#contact" class="ms-btn-primary px-4 py-1.5 rounded-[4px]">
+          <span>Book a Consultation</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. MICROSOFT 4-SECOND SYNCHRONIZED SPLIT HERO CAROUSEL -->
+  <section id="hero-carousel-section" class="relative bg-[#F2F2F2] border-b border-black/10">
+    <div class="max-w-[1440px] mx-auto grid lg:grid-cols-12 min-h-[540px] items-stretch">
+
+      <!-- Left Column: Changing Text Slides -->
+      <div class="lg:col-span-5 px-6 lg:pl-14 lg:pr-10 py-12 flex flex-col justify-between">
+        <div class="carousel-stack my-auto py-4">
+
+          <!-- SLIDE 1: Inventory Optimization -->
+          <div class="carousel-text-slide active">
+            <div class="inline-flex items-center gap-2.5 mb-4 group cursor-pointer">
+              <span class="fluent-icon-box !w-9 !h-9 bg-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"/>
+                </svg>
+              </span>
+              <span class="text-xs font-semibold uppercase tracking-wider text-[#0067B8]">01 / Smart Supply Chain</span>
+            </div>
+            <h1 class="text-4xl lg:text-[44px] font-semibold leading-[1.13] tracking-tight text-[#1B1A19] mb-4">
+              Inventory optimization
+            </h1>
+            <p class="text-[16px] text-[#605E5C] leading-relaxed mb-8">
+              Eliminate critical spare-part stockouts and reduce carrying costs with automated reorder points, real-time MRO tracking, and demand forecasting inside IBM Maximo.
+            </p>
+            <div class="flex flex-wrap items-center gap-5">
+              <a href="#contact" class="ms-btn-primary px-6 py-3 rounded-[4px]">
+                <span>Optimize Your Inventory</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+              <a href="#services" class="ms-link px-2 py-3">
+                <span>View EAM architecture</span>
+                <svg class="icon-chevron w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- SLIDE 2: Maintenance Management -->
+          <div class="carousel-text-slide">
+            <div class="inline-flex items-center gap-2.5 mb-4 group cursor-pointer">
+              <span class="fluent-icon-box !w-9 !h-9 bg-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63"/>
+                </svg>
+              </span>
+              <span class="text-xs font-semibold uppercase tracking-wider text-[#0067B8]">02 / Intelligent Work Orders</span>
+            </div>
+            <h1 class="text-4xl lg:text-[44px] font-semibold leading-[1.13] tracking-tight text-[#1B1A19] mb-4">
+              Maintenance management
+            </h1>
+            <p class="text-[16px] text-[#605E5C] leading-relaxed mb-8">
+              Streamline preventive, corrective, and mobile field work orders with automated scheduling, SLA tracking, and real-time technician dispatch across global sites.
+            </p>
+            <div class="flex flex-wrap items-center gap-5">
+              <a href="#contact" class="ms-btn-primary px-6 py-3 rounded-[4px]">
+                <span>Modernize Maintenance</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+              <a href="#services" class="ms-link px-2 py-3">
+                <span>Explore Maximo Mobile</span>
+                <svg class="icon-chevron w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- SLIDE 3: Reliability Centered Maintenance -->
+          <div class="carousel-text-slide">
+            <div class="inline-flex items-center gap-2.5 mb-4 group cursor-pointer">
+              <span class="fluent-icon-box !w-9 !h-9 bg-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5"/>
+                </svg>
+              </span>
+              <span class="text-xs font-semibold uppercase tracking-wider text-[#0067B8]">03 / Predictive Uptime</span>
+            </div>
+            <h1 class="text-4xl lg:text-[44px] font-semibold leading-[1.13] tracking-tight text-[#1B1A19] mb-4">
+              Reliability centered maintenance
+            </h1>
+            <p class="text-[16px] text-[#605E5C] leading-relaxed mb-8">
+              Shift from reactive repairs to condition-based monitoring and AI-driven anomaly detection—maximizing equipment availability and eliminating unplanned downtime.
+            </p>
+            <div class="flex flex-wrap items-center gap-5">
+              <a href="#contact" class="ms-btn-primary px-6 py-3 rounded-[4px]">
+                <span>Boost Asset Reliability</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+              <a href="#services" class="ms-link px-2 py-3">
+                <span>See MAS Monitor & Health</span>
+                <svg class="icon-chevron w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- SLIDE 4: Asset Lifecycle Planning -->
+          <div class="carousel-text-slide">
+            <div class="inline-flex items-center gap-2.5 mb-4 group cursor-pointer">
+              <span class="fluent-icon-box !w-9 !h-9 bg-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>
+                </svg>
+              </span>
+              <span class="text-xs font-semibold uppercase tracking-wider text-[#0067B8]">04 / End-to-End Capital Strategy</span>
+            </div>
+            <h1 class="text-4xl lg:text-[44px] font-semibold leading-[1.13] tracking-tight text-[#1B1A19] mb-4">
+              Asset lifecycle planning
+            </h1>
+            <p class="text-[16px] text-[#605E5C] leading-relaxed mb-8">
+              Make data-backed repair-vs-replace decisions from procurement and commissioning through retirement, extending asset longevity and optimizing total cost of ownership.
+            </p>
+            <div class="flex flex-wrap items-center gap-5">
+              <a href="#contact" class="ms-btn-primary px-6 py-3 rounded-[4px]">
+                <span>Plan Your Asset Lifecycle</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+              <a href="#services" class="ms-link px-2 py-3">
+                <span>Explore lifecycle analytics</span>
+                <svg class="icon-chevron w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- MICROSOFT-STYLE CAROUSEL CONTROLS -->
+        <div class="pt-5 border-t border-black/10 flex items-center justify-between gap-4">
+          <div class="flex items-center gap-2">
+            <button id="carousel-play-pause" type="button" aria-label="Pause Carousel" class="fluent-icon-box !w-8 !h-8 bg-white">
+              <svg id="pause-icon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5"/>
+              </svg>
+              <svg id="play-icon" class="w-3.5 h-3.5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"/>
+              </svg>
+            </button>
+            <button id="carousel-prev" type="button" aria-label="Previous Slide" class="fluent-icon-box !w-8 !h-8 bg-white">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
+              </svg>
+            </button>
+            <button id="carousel-next" type="button" aria-label="Next Slide" class="fluent-icon-box !w-8 !h-8 bg-white">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- 4 Slide Progress Bars -->
+          <div class="flex items-center gap-2 flex-1 max-w-[240px]">
+            <button type="button" class="carousel-dot active flex-1 h-1.5 bg-black/15 rounded-full overflow-hidden" data-index="0">
+              <div class="carousel-dot-fill"></div>
+            </button>
+            <button type="button" class="carousel-dot flex-1 h-1.5 bg-black/15 rounded-full overflow-hidden" data-index="1">
+              <div class="carousel-dot-fill"></div>
+            </button>
+            <button type="button" class="carousel-dot flex-1 h-1.5 bg-black/15 rounded-full overflow-hidden" data-index="2">
+              <div class="carousel-dot-fill"></div>
+            </button>
+            <button type="button" class="carousel-dot flex-1 h-1.5 bg-black/15 rounded-full overflow-hidden" data-index="3">
+              <div class="carousel-dot-fill"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Synchronized Changing High-Res Photography -->
+      <div class="lg:col-span-7 min-h-[380px] lg:min-h-[540px] relative overflow-hidden bg-[#1B1A19]">
+        <!-- Photo 1: Inventory Optimization -->
+        <div class="carousel-img-slide active">
+          <img
+            src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=85"
+            alt="Automated warehouse inventory optimization"
+            class="w-full h-full object-cover"
+          />
+          <div class="group absolute bottom-5 left-5 right-5 bg-white/95 backdrop-blur-md p-4 rounded-[6px] border border-black/10 flex items-center justify-between shadow-lg">
+            <div class="flex items-center gap-3">
+              <span class="fluent-icon-box !w-9 !h-9">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5"/>
+                </svg>
+              </span>
+              <div>
+                <p class="text-xs font-semibold text-[#0067B8] uppercase">Maximo Inventory Module</p>
+                <p class="text-sm font-semibold text-[#1B1A19]">Automated MRO Stock & Reorder Telemetry</p>
+              </div>
+            </div>
+            <span class="text-xs font-semibold text-[#0067B8] bg-[#0067B8]/10 px-2.5 py-1 rounded">01 / 04</span>
+          </div>
+        </div>
+
+        <!-- Photo 2: Maintenance Management -->
+        <div class="carousel-img-slide">
+          <img
+            src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1600&q=85"
+            alt="Maintenance management and field technician execution"
+            class="w-full h-full object-cover"
+          />
+          <div class="group absolute bottom-5 left-5 right-5 bg-white/95 backdrop-blur-md p-4 rounded-[6px] border border-black/10 flex items-center justify-between shadow-lg">
+            <div class="flex items-center gap-3">
+              <span class="fluent-icon-box !w-9 !h-9">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877"/>
+                </svg>
+              </span>
+              <div>
+                <p class="text-xs font-semibold text-[#0067B8] uppercase">Maximo Work Order Intelligence</p>
+                <p class="text-sm font-semibold text-[#1B1A19]">Preventive & Field Maintenance Execution</p>
+              </div>
+            </div>
+            <span class="text-xs font-semibold text-[#0067B8] bg-[#0067B8]/10 px-2.5 py-1 rounded">02 / 04</span>
+          </div>
+        </div>
+
+        <!-- Photo 3: Reliability Centered Maintenance -->
+        <div class="carousel-img-slide">
+          <img
+            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1600&q=85"
+            alt="Reliability centered maintenance telemetry monitoring"
+            class="w-full h-full object-cover"
+          />
+          <div class="group absolute bottom-5 left-5 right-5 bg-white/95 backdrop-blur-md p-4 rounded-[6px] border border-black/10 flex items-center justify-between shadow-lg">
+            <div class="flex items-center gap-3">
+              <span class="fluent-icon-box !w-9 !h-9">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h16.5"/>
+                </svg>
+              </span>
+              <div>
+                <p class="text-xs font-semibold text-[#0067B8] uppercase">MAS Monitor & Predict</p>
+                <p class="text-sm font-semibold text-[#1B1A19]">Condition-Based Anomaly Detection</p>
+              </div>
+            </div>
+            <span class="text-xs font-semibold text-[#0067B8] bg-[#0067B8]/10 px-2.5 py-1 rounded">03 / 04</span>
+          </div>
+        </div>
+
+        <!-- Photo 4: Asset Lifecycle Planning -->
+        <div class="carousel-img-slide">
+          <img
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=85"
+            alt="Enterprise asset lifecycle planning and capital infrastructure"
+            class="w-full h-full object-cover"
+          />
+          <div class="group absolute bottom-5 left-5 right-5 bg-white/95 backdrop-blur-md p-4 rounded-[6px] border border-black/10 flex items-center justify-between shadow-lg">
+            <div class="flex items-center gap-3">
+              <span class="fluent-icon-box !w-9 !h-9">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992"/>
+                </svg>
+              </span>
+              <div>
+                <p class="text-xs font-semibold text-[#0067B8] uppercase">Capital Investment & TCO</p>
+                <p class="text-sm font-semibold text-[#1B1A19]">End-to-End Asset Lifecycle Governance</p>
+              </div>
+            </div>
+            <span class="text-xs font-semibold text-[#0067B8] bg-[#0067B8]/10 px-2.5 py-1 rounded">04 / 04</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. CREDENTIALS & METRICS RIBBON (ICONS ANIMATE TO BLUE ON HOVER) -->
+  <section class="bg-white border-b border-black/10">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-14 py-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+      <div class="metric-item flex items-start gap-3.5 cursor-pointer group">
+        <div class="fluent-icon-box shrink-0">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-lg font-semibold text-[#1B1A19] group-hover:text-[#0067B8] transition-colors leading-snug">Silver Partner</p>
+          <p class="text-xs text-[#605E5C] mt-0.5">IBM Maximo & TRIRIGA</p>
+        </div>
+      </div>
+
+      <div class="metric-item flex items-start gap-3.5 cursor-pointer group">
+        <div class="fluent-icon-box shrink-0">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-lg font-semibold text-[#1B1A19] group-hover:text-[#0067B8] transition-colors leading-snug">Advanced Tier</p>
+          <p class="text-xs text-[#605E5C] mt-0.5">AWS Cloud Partnership</p>
+        </div>
+      </div>
+
+      <div class="metric-item flex items-start gap-3.5 cursor-pointer group">
+        <div class="fluent-icon-box shrink-0">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-lg font-semibold text-[#1B1A19] group-hover:text-[#0067B8] transition-colors leading-snug">Red Hat</p>
+          <p class="text-xs text-[#605E5C] mt-0.5">Certified Enterprise Partner</p>
+        </div>
+      </div>
+
+      <div class="metric-item flex items-start gap-3.5 cursor-pointer group">
+        <div class="fluent-icon-box shrink-0">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-lg font-semibold text-[#1B1A19] group-hover:text-[#0067B8] transition-colors leading-snug">70+ Experts</p>
+          <p class="text-xs text-[#605E5C] mt-0.5">Certified Professionals</p>
+        </div>
+      </div>
+
+      <div class="metric-item flex items-start gap-3.5 cursor-pointer group">
+        <div class="fluent-icon-box shrink-0">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-lg font-semibold text-[#1B1A19] group-hover:text-[#0067B8] transition-colors leading-snug">15+ Years</p>
+          <p class="text-xs text-[#605E5C] mt-0.5">Enterprise EAM Experience</p>
+        </div>
+      </div>
+
+      <div class="metric-item flex items-start gap-3.5 cursor-pointer group">
+        <div class="fluent-icon-box shrink-0">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-lg font-semibold text-[#1B1A19] group-hover:text-[#0067B8] transition-colors leading-snug">8+ Sectors</p>
+          <p class="text-xs text-[#605E5C] mt-0.5">Global Industries Served</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. PHOTO-DRIVEN 4-UP MICROSOFT PRODUCT CARDS (CORE SERVICES) -->
+  <section id="services" class="max-w-[1440px] mx-auto px-6 lg:px-14 py-16">
+    <div class="mb-10">
+      <p class="text-xs font-semibold uppercase tracking-wider text-[#0067B8] mb-2">Core Capabilities</p>
+      <h2 class="text-3xl font-semibold text-[#1B1A19]">Solutions built for mission-critical operations</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <article class="fluent-card flex flex-col justify-between">
+        <div>
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80" alt="IBM Maximo Asset Management" class="card-img w-full h-full object-cover" />
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-semibold text-[#0067B8] uppercase">Asset Management</span>
+              <span class="fluent-icon-box !w-8 !h-8">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75"/>
+                </svg>
+              </span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">IBM Maximo & MAS Migration</h3>
+            <p class="text-sm text-[#605E5C] leading-relaxed">
+              End-to-end Maximo implementation, seamless MAS 8/9 migration, automation scripting, mobile enablement, and workflow optimization.
+            </p>
+          </div>
+        </div>
+        <div class="px-6 pb-6">
+          <a href="#contact" class="ms-link text-sm">
+            <span>Explore Maximo services</span>
+            <svg class="icon-chevron w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="fluent-card flex flex-col justify-between">
+        <div>
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=80" alt="Enterprise Server Integration" class="card-img w-full h-full object-cover" />
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-semibold text-[#0067B8] uppercase">Connected Systems</span>
+              <span class="fluent-icon-box !w-8 !h-8">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+                </svg>
+              </span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Enterprise Integration</h3>
+            <p class="text-sm text-[#605E5C] leading-relaxed">
+              Unify your data across SAP, Oracle, REST APIs, middleware solutions, real-time data sync, and Microsoft Azure AD integrations.
+            </p>
+          </div>
+        </div>
+        <div class="px-6 pb-6">
+          <a href="#contact" class="ms-link text-sm">
+            <span>Explore integrations</span>
+            <svg class="icon-chevron w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="fluent-card flex flex-col justify-between">
+        <div>
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=80" alt="Cloud and Infrastructure Modernization" class="card-img w-full h-full object-cover" />
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-semibold text-[#0067B8] uppercase">Cloud Scale</span>
+              <span class="fluent-icon-box !w-8 !h-8">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z"/>
+                </svg>
+              </span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Cloud & Infrastructure</h3>
+            <p class="text-sm text-[#605E5C] leading-relaxed">
+              Resilient AWS deployments, Azure administration, disaster backup & recovery, virtualization, and full-stack monitoring solutions.
+            </p>
+          </div>
+        </div>
+        <div class="px-6 pb-6">
+          <a href="#contact" class="ms-link text-sm">
+            <span>Explore cloud solutions</span>
+            <svg class="icon-chevron w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="fluent-card flex flex-col justify-between">
+        <div>
+          <div class="h-48 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80" alt="Smart Commercial Real Estate and Facilities" class="card-img w-full h-full object-cover" />
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-semibold text-[#0067B8] uppercase">Facilities & 24x7 Ops</span>
+              <span class="fluent-icon-box !w-8 !h-8">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21"/>
+                </svg>
+              </span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">TRIRIGA & Managed Support</h3>
+            <p class="text-sm text-[#605E5C] leading-relaxed">
+              Intelligent facility management, lease accounting, and space optimization backed by 24x7 L2/L3 and AMS incident monitoring.
+            </p>
+          </div>
+        </div>
+        <div class="px-6 pb-6">
+          <a href="#contact" class="ms-link text-sm">
+            <span>Explore TRIRIGA & support</span>
+            <svg class="icon-chevron w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 5. PHOTOGRAPHY BENTO GRID: 8 INDUSTRIES SERVED -->
+  <section id="industries" class="max-w-[1440px] mx-auto px-6 lg:px-14 pb-20">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wider text-[#0067B8] mb-2">Industries We Power</p>
+        <h2 class="text-3xl font-semibold text-[#1B1A19]">Transforming physical assets across 8 key sectors</h2>
+      </div>
+      <p class="text-sm text-[#605E5C] max-w-md mt-2 md:mt-0">
+        Tailored EAM, cloud, and automation blueprints designed for high-compliance, asset-intensive environments.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="fluent-card group relative h-64 cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=800&q=80" alt="Manufacturing" class="card-img w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent p-5 flex flex-col justify-end text-white">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Manufacturing</h3>
+            <span class="industry-badge-icon">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+            </span>
+          </div>
+          <p class="text-xs text-gray-200 mt-1">Predictive maintenance & plant automation</p>
+        </div>
+      </div>
+
+      <div class="fluent-card group relative h-64 cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80" alt="Utilities & Power Grids" class="card-img w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent p-5 flex flex-col justify-end text-white">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Utilities</h3>
+            <span class="industry-badge-icon">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+            </span>
+          </div>
+          <p class="text-xs text-gray-200 mt-1">Grid reliability & field workforce mobility</p>
+        </div>
+      </div>
+
+      <div class="fluent-card group relative h-64 cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80" alt="Oil & Gas Refinery" class="card-img w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent p-5 flex flex-col justify-end text-white">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Oil & Gas</h3>
+            <span class="industry-badge-icon">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+            </span>
+          </div>
+          <p class="text-xs text-gray-200 mt-1">Upstream & downstream safety compliance</p>
+        </div>
+      </div>
+
+      <div class="fluent-card group relative h-64 cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1541888946425-d09bb18086f6?auto=format&fit=crop&w=800&q=80" alt="Government & Public Sector" class="card-img w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent p-5 flex flex-col justify-end text-white">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Government</h3>
+            <span class="industry-badge-icon">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+            </span>
+          </div>
+          <p class="text-xs text-gray-200 mt-1">Public infrastructure & municipal asset lifecycle</p>
+        </div>
+      </div>
+
+      <div class="fluent-card group relative h-64 cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80" alt="Healthcare Facilities" class="card-img w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent p-5 flex flex-col justify-end text-white">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Healthcare</h3>
+            <span class="industry-badge-icon">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+            </span>
+          </div>
+          <p class="text-xs text-gray-200 mt-1">Biomedical equipment & hospital facility uptime</p>
+        </div>
+      </div>
+
+      <div class="fluent-card group relative h-64 cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80" alt="Civil Infrastructure" class="card-img w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent p-5 flex flex-col justify-end text-white">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Infrastructure</h3>
+            <span class="industry-badge-icon">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+            </span>
+          </div>
+          <p class="text-xs text-gray-200 mt-1">Large-scale capital projects & civil engineering</p>
+        </div>
+      </div>
+
+      <div class="fluent-card group relative h-64 cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80" alt="Transportation & Fleet" class="card-img w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent p-5 flex flex-col justify-end text-white">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Transportation</h3>
+            <span class="industry-badge-icon">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+            </span>
+          </div>
+          <p class="text-xs text-gray-200 mt-1">Rail, transit & fleet maintenance intelligence</p>
+        </div>
+      </div>
+
+      <div class="fluent-card group relative h-64 cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="Commercial Real Estate" class="card-img w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent p-5 flex flex-col justify-end text-white">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Real Estate</h3>
+            <span class="industry-badge-icon">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+            </span>
+          </div>
+          <p class="text-xs text-gray-200 mt-1">TRIRIGA space planning & portfolio operations</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FOOTER -->
+  <footer id="contact" class="bg-[#F2F2F2] border-t border-black/10 text-[#605E5C] text-xs">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-14 py-8 flex flex-col sm:flex-row justify-between items-center">
+      <p>Copyright © 2026 Go2Ways • Uttam Nagar, New Delhi, India, 110059 • +91 8826949739</p>
+      <p class="mt-2 sm:mt-0 text-[#0067B8] font-medium">support@go2ways.com</p>
+    </div>
+  </footer>
+
+  <!-- RELIABLE 4-SECOND CAROUSEL CONTROLLER -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const heroSection = document.getElementById('hero-carousel-section');
+      const textSlides = document.querySelectorAll('.carousel-text-slide');
+      const imgSlides = document.querySelectorAll('.carousel-img-slide');
+      const dots = document.querySelectorAll('.carousel-dot');
+      const prevBtn = document.getElementById('carousel-prev');
+      const nextBtn = document.getElementById('carousel-next');
+      const playPauseBtn = document.getElementById('carousel-play-pause');
+      const pauseIcon = document.getElementById('pause-icon');
+      const playIcon = document.getElementById('play-icon');
+
+      let current = 0;
+      let isPaused = false;
+      let timer = null;
+      const INTERVAL = 4000;
+
+      function showSlide(index) {
+        current = (index + textSlides.length) % textSlides.length;
+
+        textSlides.forEach((el, i) => el.classList.toggle('active', i === current));
+        imgSlides.forEach((el, i) => el.classList.toggle('active', i === current));
+
+        dots.forEach((dot, i) => {
+          dot.classList.remove('active', 'completed');
+          // Force reflow so the 4s CSS progress animation restarts cleanly
+          void dot.offsetWidth;
+          if (i < current) {
+            dot.classList.add('completed');
+          } else if (i === current) {
+            dot.classList.add('active');
+          }
+        });
+      }
+
+      function startTimer() {
+        clearInterval(timer);
+        if (!isPaused) {
+          timer = setInterval(() => {
+            showSlide(current + 1);
+          }, INTERVAL);
+        }
+      }
+
+      prevBtn.addEventListener('click', () => {
+        showSlide(current - 1);
+        startTimer();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        showSlide(current + 1);
+        startTimer();
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const target = parseInt(dot.getAttribute('data-index'), 10);
+          showSlide(target);
+          startTimer();
+        });
+      });
+
+      playPauseBtn.addEventListener('click', () => {
+        isPaused = !isPaused;
+        heroSection.classList.toggle('carousel-paused', isPaused);
+        pauseIcon.classList.toggle('hidden', isPaused);
+        playIcon.classList.toggle('hidden', !isPaused);
+        if (isPaused) {
+          clearInterval(timer);
+        } else {
+          startTimer();
+        }
+      });
+
+      // Start the 4-second cycle on load
+      showSlide(0);
+      startTimer();
+    });
+  </script>
+</body>
+</html>
